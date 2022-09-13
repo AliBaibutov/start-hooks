@@ -3,13 +3,13 @@ import CollapseWrapper from "../common/collapse";
 import PropTypes from "prop-types";
 
 const FormComponent = ({ children }) => {
-    return (
-        <ol>
-            {React.Children.map(children, (child) => {
-                <li>{child}</li>;
-                return React.cloneElement(<li>{child}</li>);
-            })}
-        </ol>
+    const arrayOfChildren = React.Children.toArray(children);
+    console.log(arrayOfChildren);
+    return React.Children.map(arrayOfChildren, (child) =>
+        React.cloneElement(child, {
+            ...child.props,
+            num: +child.key.replace(".", "") + 1
+        })
     );
 };
 FormComponent.propTypes = {
@@ -38,8 +38,11 @@ const ChildrenExercise = () => {
     );
 };
 
-const Component = () => {
-    return <div>Компонент списка</div>;
+const Component = ({ num }) => {
+    return <div>{num}Компонент списка</div>;
+};
+Component.propTypes = {
+    num: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default ChildrenExercise;

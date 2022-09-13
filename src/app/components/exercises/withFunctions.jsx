@@ -2,17 +2,14 @@ import React from "react";
 import Card from "../common/Card";
 
 const withFunctions = (Component) => () => {
-    const isAuth = localStorage.getItem("auth");
     const handleLogin = () => {
-        if (!isAuth) {
-            localStorage.setItem("auth", "token");
-        }
+        localStorage.setItem("auth", "token");
     };
     const handleLogOut = () => {
-        if (isAuth) {
-            localStorage.removeItem("auth");
-        }
+        localStorage.removeItem("auth");
     };
+    const isAuth = !!localStorage.getItem("auth");
+
     return (
         <Card>
             <Component
